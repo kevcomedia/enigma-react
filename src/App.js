@@ -6,34 +6,17 @@ class App extends Component {
     key: null,
   };
 
-  handleKeyDown = ({ keyCode }) => {
-    const isLetterCode = 65 <= keyCode && keyCode <= 90;
-    if (!isLetterCode) return;
-
-    this.setState({ key: String.fromCharCode(keyCode) });
-  };
-
-  handleKeyUp = () => {
-    this.setState({ key: null });
+  setActiveKey = (key) => {
+    this.setState({ key });
   };
 
   render() {
     return (
       <div className="App">
-        <Keyboard />
+        <Keyboard onActivate={this.setActiveKey} />
         {this.state.key && <p>{this.state.key}</p>}
       </div>
     );
-  }
-
-  componentDidMount() {
-    document.addEventListener('keydown', this.handleKeyDown);
-    document.addEventListener('keyup', this.handleKeyUp);
-  }
-
-  componentWillUnmount() {
-    document.removeEventListener('keydown', this.handleKeyDown);
-    document.removeEventListener('keyup', this.handleKeyUp);
   }
 }
 
