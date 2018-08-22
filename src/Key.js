@@ -13,7 +13,7 @@ class Key extends Component {
   render() {
     return (
       <button
-        className="Key"
+        className={this.props.isActive ? 'Key Key_active' : 'Key'}
         type="button"
         onMouseDown={this.handleMouseDown}
         onMouseUp={this.handleMouseUp}

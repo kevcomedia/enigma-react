@@ -2,8 +2,13 @@ import React, { Component } from 'react';
 import Key from './Key';
 
 class Keyboard extends Component {
+  state = {
+    key: null,
+  };
+
   activateKey = (key) => {
     this.props.onActivate(key);
+    this.setState({ key });
   };
 
   handleKeyDown = ({ keyCode }) => {
@@ -30,6 +35,7 @@ class Keyboard extends Component {
           <div className="Keyboard__row" key={idx}>
             {row.map((key) => (
               <Key
+                isActive={key == this.state.key}
                 label={key}
                 key={key}
                 onActivate={this.activateKey}

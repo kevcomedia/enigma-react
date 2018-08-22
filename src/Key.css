@@ -16,7 +16,7 @@
   width: var(--size);
 }
 
-.Key:active {
+.Key_active {
   --darkcolor: #222;
   --lightcolor: #999;
 
