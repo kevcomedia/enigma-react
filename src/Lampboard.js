@@ -10,7 +10,11 @@ class Lampboard extends Component {
         {letterRows.map((row, idx) => (
           <div className="Lampboard__row" key={idx}>
             {row.map((letter) => (
-              <Lamp label={letter} key={letter} />
+              <Lamp
+                isActive={this.props.output === letter}
+                label={letter}
+                key={letter}
+              />
             ))}
           </div>
         ))}

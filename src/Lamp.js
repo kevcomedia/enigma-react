@@ -1,7 +1,12 @@
 import React, { Component } from 'react';
+import './Lamp.css';
 
 function Lamp(props) {
-  return <p>Lamp {props.label}</p>;
+  return (
+    <div className={props.isActive ? 'Lamp Lamp_active' : 'Lamp'}>
+      {props.label}
+    </div>
+  );
 }
 
 export default Lamp;
