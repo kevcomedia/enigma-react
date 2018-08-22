@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Lampboard from './Lampboard';
 import Keyboard from './Keyboard';
 
 class App extends Component {
@@ -13,8 +14,8 @@ class App extends Component {
   render() {
     return (
       <div className="App">
+        <Lampboard output={this.state.key} />
         <Keyboard onActivate={this.setActiveKey} />
-        {this.state.key && <p>{this.state.key}</p>}
       </div>
     );
   }
