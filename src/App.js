@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Lampboard from './Lampboard';
 import Keyboard from './Keyboard';
+import Plugboard from './Plugboard';
 
 class App extends Component {
   state = {
@@ -16,6 +17,7 @@ class App extends Component {
       <div className="App">
         <Lampboard output={this.state.key} />
         <Keyboard onActivate={this.setActiveKey} />
+        <Plugboard />
       </div>
     );
   }
