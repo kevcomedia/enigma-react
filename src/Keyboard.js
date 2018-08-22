@@ -2,15 +2,19 @@ import React, { Component } from 'react';
 import Key from './Key';
 
 class Keyboard extends Component {
+  activateKey = (key) => {
+    this.props.onActivate(key);
+  };
+
   handleKeyDown = ({ keyCode }) => {
     const isLetterCode = 65 <= keyCode && keyCode <= 90;
     if (!isLetterCode) return;
 
-    this.props.onActivate(String.fromCharCode(keyCode));
+    this.activateKey(String.fromCharCode(keyCode));
   };
 
   handleKeyUp = () => {
-    this.props.onActivate(null);
+    this.activateKey(null);
   };
 
   render() {
@@ -25,7 +29,11 @@ class Keyboard extends Component {
         {keyRows.map((row, idx) => (
           <div className="Keyboard__row" key={idx}>
             {row.map((key) => (
-              <Key label={key} key={key} />
+              <Key
+                label={key}
+                key={key}
+                onActivate={this.activateKey}
+              />
             ))}
           </div>
         ))}
