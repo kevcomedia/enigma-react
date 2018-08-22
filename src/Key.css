@@ -1,0 +1,29 @@
+.Key {
+  --darkcolor: #444;
+  --lightcolor: #bbb;
+  --margin: .5rem;
+  --shadow-offset: .5rem;
+  --size: 4rem;
+
+  background-color: var(--darkcolor);
+  border-radius: 50%;
+  border: .3rem solid var(--lightcolor);
+  box-shadow: var(--shadow-offset) var(--shadow-offset) .4rem #000;
+  color: var(--lightcolor);
+  cursor: pointer;
+  display: inline-block;
+  font: 700 1.6rem/1.4 sans-serif;
+  margin-bottom: var(--margin);
+  margin-left: var(--margin);
+  margin-right: var(--margin);
+  height: var(--size);
+  width: var(--size);
+}
+
+.Key_active {
+  --darkcolor: #222;
+  --lightcolor: #999;
+
+  box-shadow: none;
+  transform: translateY(var(--shadow-offset));
+}
