@@ -1,0 +1,7 @@
+# enigma-react
+
+Implementation of the M3 Enigma variant in React.
+
+---
+
+This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
