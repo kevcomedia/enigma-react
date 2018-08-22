@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import './Plugboard.css';
 import Plug from './Plug';
 import letterRows from './letter-rows';
 
