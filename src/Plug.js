@@ -2,14 +2,19 @@ import React, { Component } from 'react';
 
 class Plug extends Component {
   render() {
+    const availableOptions = this.props.availableLetters.map((letter) => (
+      <option value={letter} key={letter}>
+        {letter}
+      </option>
+    ));
+
     return (
       <div className="Plug">
         <label className="Plug__label">
-          {this.props.label}
+          <b>{this.props.letter}</b>
           <select>
-            <option value="A">A</option>
-            <option value="B">B</option>
-            <option value="C">C</option>
+            <option value="-">none</option>
+            {availableOptions}
           </select>
         </label>
       </div>
