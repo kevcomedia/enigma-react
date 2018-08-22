@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import './Keyboard.css';
+
 import Key from './Key';
 
 class Keyboard extends Component {

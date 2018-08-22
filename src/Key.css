@@ -1,6 +1,7 @@
 .Key {
   --darkcolor: #444;
   --lightcolor: #bbb;
+  --margin: .5rem;
   --shadow-offset: .5rem;
   --size: 4rem;
 
@@ -12,6 +13,9 @@
   cursor: pointer;
   display: inline-block;
   font: 700 1.6rem/1.4 sans-serif;
+  margin-bottom: var(--margin);
+  margin-left: var(--margin);
+  margin-right: var(--margin);
   height: var(--size);
   width: var(--size);
 }
