@@ -17,7 +17,10 @@ class Plug extends Component {
       <div className="Plug">
         <label className="Plug__label">
           <b>{this.props.letter}</b>
-          <select onChange={this.handleChange}>
+          <select
+            value={this.props.connectedTo || '-'}
+            onChange={this.handleChange}
+          >
             <option value="-">-</option>
             {availableOptions}
           </select>

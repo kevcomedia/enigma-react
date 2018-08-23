@@ -31,11 +31,15 @@ class Plugboard extends Component {
   };
 
   renderPlug = (letter) => {
+    const pair = this.state.connections.find((pair) => pair.includes(letter));
+    const connectedTo = pair && (letter === pair[0] ? pair[1] : pair[0]);
+
     return (
       <Plug
         letter={letter}
         availableLetters={alphabet.filter((l) => l !== letter)}
         key={letter}
+        connectedTo={connectedTo}
         onConnect={this.updateConnections}
       />
     );
