@@ -13,9 +13,13 @@ class Plug extends Component {
       </option>
     ));
 
+    const labelClasses = this.props.connectedTo
+      ? 'Plug__label Plug__label_active'
+      : 'Plug__label';
+
     return (
       <div className="Plug">
-        <label className="Plug__label">
+        <label className={labelClasses}>
           <b>{this.props.letter}</b>
           <select
             value={this.props.connectedTo || '-'}

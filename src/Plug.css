@@ -1,5 +1,10 @@
 .Plug__label {
   align-items: center;
+  color: #aaa;
   display: flex;
   flex-direction: column;
+}
+
+.Plug__label_active {
+  color: #000;
 }
