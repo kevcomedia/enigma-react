@@ -8,12 +8,35 @@ const alphabet = Array.from({ length: 26 }).map((_, i) =>
 );
 
 class Plugboard extends Component {
+  state = {
+    connections: [],
+  };
+
+  updateConnections = (pair: string) => {
+    this.setState((prevState) => {
+      const conflictingRemoved = prevState.connections.filter(
+        (p) => !p.includes(pair[0]) && !p.includes(pair[1]),
+      );
+
+      if (pair.includes('-')) {
+        return {
+          connections: conflictingRemoved,
+        };
+      }
+
+      return {
+        connections: [...conflictingRemoved, pair],
+      };
+    });
+  };
+
   renderPlug = (letter) => {
     return (
       <Plug
         letter={letter}
         availableLetters={alphabet.filter((l) => l !== letter)}
         key={letter}
+        onConnect={this.updateConnections}
       />
     );
   };

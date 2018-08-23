@@ -2,6 +2,10 @@ import React, { Component } from 'react';
 import './Plug.css';
 
 class Plug extends Component {
+  handleChange = (event) => {
+    this.props.onConnect(`${this.props.letter}${event.target.value}`);
+  };
+
   render() {
     const availableOptions = this.props.availableLetters.map((letter) => (
       <option value={letter} key={letter}>
@@ -13,7 +17,7 @@ class Plug extends Component {
       <div className="Plug">
         <label className="Plug__label">
           <b>{this.props.letter}</b>
-          <select>
+          <select onChange={this.handleChange}>
             <option value="-">-</option>
             {availableOptions}
           </select>
