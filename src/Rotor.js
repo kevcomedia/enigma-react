@@ -9,6 +9,7 @@ class Rotor extends Component {
   };
 
   handleTypeChange = (event) => {
+    event.target.blur();
     this.update({ type: event.target.value });
   };
 
