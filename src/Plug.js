@@ -4,6 +4,7 @@ import './Plug.css';
 class Plug extends Component {
   handleChange = (event) => {
     this.props.onConnect(`${this.props.letter}${event.target.value}`);
+    event.target.blur();
   };
 
   render() {
