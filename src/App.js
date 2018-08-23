@@ -13,22 +13,8 @@ class App extends Component {
     this.setState({ key });
   };
 
-  updatePlugboard = (pair) => {
-    this.setState((prevState) => {
-      const conflictingRemoved = prevState.plugboard.filter(
-        (p) => !p.includes(pair[0]) && !p.includes(pair[1]),
-      );
-
-      if (pair.includes('-')) {
-        return {
-          plugboard: conflictingRemoved,
-        };
-      }
-
-      return {
-        plugboard: [...conflictingRemoved, pair],
-      };
-    });
+  updatePlugboard = (plugboard) => {
+    this.setState({ plugboard });
   };
 
   render() {

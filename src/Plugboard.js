@@ -9,7 +9,15 @@ const alphabet = Array.from({ length: 26 }).map((_, i) =>
 
 class Plugboard extends Component {
   updateConnections = (pair: string) => {
-    this.props.onConnectionChange(pair);
+    const conflictingRemoved = this.props.connections.filter(
+      (p) => !p.includes(pair[0]) && !p.includes(pair[1]),
+    );
+
+    if (pair.includes('-')) {
+      this.props.onConnectionChange(conflictingRemoved);
+    } else {
+      this.props.onConnectionChange([...conflictingRemoved, pair]);
+    }
   };
 
   renderPlug = (letter) => {
