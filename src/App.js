@@ -8,6 +8,7 @@ class App extends Component {
   state = {
     key: null,
     plugboard: [],
+    reflector: 'B',
   };
 
   setActiveKey = (key) => {
@@ -16,6 +17,10 @@ class App extends Component {
 
   updatePlugboard = (plugboard) => {
     this.setState({ plugboard });
+  };
+
+  setReflector = (reflector) => {
+    this.setState({ reflector });
   };
 
   transform = () => {
@@ -35,7 +40,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <Reflector />
+        <Reflector type={this.state.reflector} onChange={this.setReflector} />
         <Lampboard output={this.transform()} />
         <Keyboard onActivate={this.setActiveKey} />
         <Plugboard
