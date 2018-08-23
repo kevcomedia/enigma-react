@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Reflector from './Reflector';
+import Rotor from './Rotor';
 import Lampboard from './Lampboard';
 import Keyboard from './Keyboard';
 import Plugboard from './Plugboard';
@@ -59,6 +60,7 @@ class App extends Component {
     return (
       <div className="App">
         <Reflector type={this.state.reflector} onChange={this.setReflector} />
+        <Rotor />
         <Lampboard output={this.transform()} />
         <Keyboard onActivate={this.setActiveKey} />
         <Plugboard
