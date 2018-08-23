@@ -17,10 +17,24 @@ class App extends Component {
     this.setState({ plugboard });
   };
 
+  transform = () => {
+    if (!this.state.key) return null;
+    return this.plugboardTransform(this.state.key);
+  };
+
+  plugboardTransform = (letter) => {
+    const pair = this.state.plugboard.find((pair) => pair.includes(letter));
+    if (pair) {
+      return letter === pair[0] ? pair[1] : pair[0];
+    }
+
+    return letter;
+  };
+
   render() {
     return (
       <div className="App">
-        <Lampboard output={this.state.key} />
+        <Lampboard output={this.transform()} />
         <Keyboard onActivate={this.setActiveKey} />
         <Plugboard
           connections={this.state.plugboard}
