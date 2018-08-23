@@ -25,7 +25,9 @@ class App extends Component {
 
   transform = () => {
     if (!this.state.key) return null;
-    return this.plugboardTransform(this.state.key);
+    return this.plugboardTransform(
+      this.reflectorTransform(this.plugboardTransform(this.state.key)),
+    );
   };
 
   plugboardTransform = (letter) => {
@@ -35,6 +37,16 @@ class App extends Component {
     }
 
     return letter;
+  };
+
+  reflectorTransform = (letter) => {
+    const reflectors = {
+      B: 'YRUHQSLDPXNGOKMIEBFZCWVJAT',
+      C: 'FVPJIAOYEDRZXWGCTKUQSBNMHL',
+    };
+
+    const letterCode = letter.charCodeAt() - 65;
+    return reflectors[this.state.reflector][letterCode];
   };
 
   render() {
