@@ -1,27 +1,28 @@
 import React, { Component } from 'react';
 
 class Rotor extends Component {
+  update = ({
+    type = this.props.type,
+    position = this.props.position,
+  } = {}) => {
+    this.props.onUpdate({ type, position });
+  };
+
   handleTypeChange = (event) => {
-    this.props.onUpdate({
-      type: event.target.value,
-      position: this.props.position,
-    });
+    this.update({ type: event.target.value });
   };
 
   handlePositionChange = (event) => {
-    let value = +event.target.value;
-    if (Number.isNaN(value)) return;
+    let position = +event.target.value;
+    if (Number.isNaN(position)) return;
 
-    if (value > 26) {
-      value = 1;
-    } else if (value < 1) {
-      value = 26;
+    if (position > 26) {
+      position = 1;
+    } else if (position < 1) {
+      position = 26;
     }
 
-    this.props.onUpdate({
-      type: this.props.type,
-      position: value,
-    });
+    this.update({ position });
   };
 
   render() {
