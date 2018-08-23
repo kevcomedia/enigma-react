@@ -1,6 +1,22 @@
 import React, { Component } from 'react';
 
 class Rotor extends Component {
+  handlePositionChange = (event) => {
+    let value = +event.target.value;
+    if (Number.isNaN(value)) return;
+
+    if (value > 26) {
+      value = 1;
+    } else if (value < 1) {
+      value = 26;
+    }
+
+    this.props.onUpdate({
+      type: this.props.type,
+      position: value,
+    });
+  };
+
   render() {
     return (
       <div className="Rotor">
@@ -14,7 +30,11 @@ class Rotor extends Component {
           <option value="VII">VII</option>
           <option value="VIII">VIII</option>
         </select>
-        <input type="number" min="1" max="26" />
+        <input
+          type="number"
+          value={this.props.position}
+          onChange={this.handlePositionChange}
+        />
       </div>
     );
   }

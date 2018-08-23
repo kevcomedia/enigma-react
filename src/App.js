@@ -11,6 +11,12 @@ class App extends Component {
     key: null,
     plugboard: [],
     reflector: 'B',
+    rotors: [
+      {
+        type: 'I',
+        position: 1,
+      },
+    ],
   };
 
   setActiveKey = (key) => {
@@ -23,6 +29,16 @@ class App extends Component {
 
   setReflector = (reflector) => {
     this.setState({ reflector });
+  };
+
+  updateRotor = (index, rotor) => {
+    this.setState((prevState) => ({
+      rotors: [
+        ...prevState.rotors.slice(0, index),
+        rotor,
+        ...prevState.rotors.slice(index + 1),
+      ],
+    }));
   };
 
   transform = () => {
@@ -60,7 +76,14 @@ class App extends Component {
     return (
       <div className="App">
         <Reflector type={this.state.reflector} onChange={this.setReflector} />
-        <Rotor />
+        {this.state.rotors.map(({ type, position }, idx) => (
+          <Rotor
+            type={type}
+            position={position}
+            onUpdate={this.updateRotor.bind(this, idx)}
+            key={idx}
+          />
+        ))}
         <Lampboard output={this.transform()} />
         <Keyboard onActivate={this.setActiveKey} />
         <Plugboard
