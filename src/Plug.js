@@ -14,7 +14,7 @@ class Plug extends Component {
         <label className="Plug__label">
           <b>{this.props.letter}</b>
           <select>
-            <option value="-">none</option>
+            <option value="-">-</option>
             {availableOptions}
           </select>
         </label>
