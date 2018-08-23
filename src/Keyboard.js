@@ -32,7 +32,7 @@ class Keyboard extends Component {
           <div className="Keyboard__row" key={idx}>
             {row.map((key) => (
               <Key
-                isActive={key == this.state.key}
+                isActive={key === this.state.key}
                 label={key}
                 key={key}
                 onActivate={this.activateKey}
