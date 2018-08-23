@@ -3,6 +3,7 @@ import Reflector from './Reflector';
 import Lampboard from './Lampboard';
 import Keyboard from './Keyboard';
 import Plugboard from './Plugboard';
+import { createPipe } from './utils';
 
 class App extends Component {
   state = {
@@ -25,9 +26,14 @@ class App extends Component {
 
   transform = () => {
     if (!this.state.key) return null;
-    return this.plugboardTransform(
-      this.reflectorTransform(this.plugboardTransform(this.state.key)),
+
+    const transformPipe = createPipe(
+      this,
+      this.plugboardTransform,
+      this.reflectorTransform,
+      this.plugboardTransform,
     );
+    return transformPipe(this.state.key);
   };
 
   plugboardTransform = (letter) => {
