@@ -8,30 +8,12 @@ const alphabet = Array.from({ length: 26 }).map((_, i) =>
 );
 
 class Plugboard extends Component {
-  state = {
-    connections: [],
-  };
-
   updateConnections = (pair: string) => {
-    this.setState((prevState) => {
-      const conflictingRemoved = prevState.connections.filter(
-        (p) => !p.includes(pair[0]) && !p.includes(pair[1]),
-      );
-
-      if (pair.includes('-')) {
-        return {
-          connections: conflictingRemoved,
-        };
-      }
-
-      return {
-        connections: [...conflictingRemoved, pair],
-      };
-    });
+    this.props.onConnectionChange(pair);
   };
 
   renderPlug = (letter) => {
-    const pair = this.state.connections.find((pair) => pair.includes(letter));
+    const pair = this.props.connections.find((pair) => pair.includes(letter));
     const connectedTo = pair && (letter === pair[0] ? pair[1] : pair[0]);
 
     return (

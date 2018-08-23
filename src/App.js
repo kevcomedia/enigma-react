@@ -6,10 +6,29 @@ import Plugboard from './Plugboard';
 class App extends Component {
   state = {
     key: null,
+    plugboard: [],
   };
 
   setActiveKey = (key) => {
     this.setState({ key });
+  };
+
+  updatePlugboard = (pair) => {
+    this.setState((prevState) => {
+      const conflictingRemoved = prevState.plugboard.filter(
+        (p) => !p.includes(pair[0]) && !p.includes(pair[1]),
+      );
+
+      if (pair.includes('-')) {
+        return {
+          plugboard: conflictingRemoved,
+        };
+      }
+
+      return {
+        plugboard: [...conflictingRemoved, pair],
+      };
+    });
   };
 
   render() {
@@ -17,7 +36,10 @@ class App extends Component {
       <div className="App">
         <Lampboard output={this.state.key} />
         <Keyboard onActivate={this.setActiveKey} />
-        <Plugboard />
+        <Plugboard
+          connections={this.state.plugboard}
+          onConnectionChange={this.updatePlugboard}
+        />
       </div>
     );
   }
