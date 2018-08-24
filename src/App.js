@@ -53,14 +53,14 @@ class App extends Component {
     }));
   };
 
-  transform = () => {
-    if (!this.state.key) return null;
+  transform = (rotorStates, letter) => {
+    if (!letter) return null;
 
-    const rotorPipeRight = this.state.rotors
+    const rotorPipeRight = rotorStates
       .map((rotorState) => this.rotorTransform.bind(this, rotorState, true))
       .reverse();
 
-    const rotorPipeLeft = this.state.rotors.map((rotorState) =>
+    const rotorPipeLeft = rotorStates.map((rotorState) =>
       this.rotorTransform.bind(this, rotorState, false),
     );
 
@@ -72,7 +72,7 @@ class App extends Component {
       ...rotorPipeLeft,
       this.plugboardTransform,
     );
-    return transformPipe(this.state.key);
+    return transformPipe(letter);
   };
 
   plugboardTransform = (letter) => {
@@ -144,7 +144,7 @@ class App extends Component {
             key={idx}
           />
         ))}
-        <Lampboard output={this.transform()} />
+        <Lampboard output={this.transform(this.state.rotors, this.state.key)} />
         <Keyboard onActivate={this.setActiveKey} />
         <Plugboard
           connections={this.state.plugboard}
