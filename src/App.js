@@ -47,7 +47,19 @@ class App extends Component {
     const transformPipe = createPipe(
       this,
       this.plugboardTransform,
+      this.rotorTransform.bind(
+        this,
+        this.state.rotors[0].type,
+        this.state.rotors[0].position,
+        true,
+      ),
       this.reflectorTransform,
+      this.rotorTransform.bind(
+        this,
+        this.state.rotors[0].type,
+        this.state.rotors[0].position,
+        false,
+      ),
       this.plugboardTransform,
     );
     return transformPipe(this.state.key);
@@ -70,6 +82,34 @@ class App extends Component {
 
     const letterCode = letter.charCodeAt() - 65;
     return reflectors[this.state.reflector][letterCode];
+  };
+
+  rotorTransform = (type, position, fromRight, letter) => {
+    const rotors = {
+      I: 'EKMFLGDQVZNTOWYHXUSPAIBRCJ',
+      II: 'AJDKSIRUXBLHWTMCQGZNPYFVOE',
+      III: 'BDFHJLCPRTXVZNYEIWGAKMUSQO',
+      IV: 'ESOVPZJAYQUIRHXLNFTGKDCMWB',
+      V: 'VZBRGITYUPSDNHLXAWMJQOFECK',
+      VI: 'JPGVOUMFYQBENHZRDKASXLICTW',
+      VII: 'NZJHGRCXMYSWBOUFAIVLPEKQDT',
+      VIII: 'FKQHTLXOCBJSPDZRAMEWNIUYGV',
+    };
+
+    const letterCode = letter.charCodeAt() - 65;
+    const p = position - 1;
+
+    if (fromRight) {
+      const index = (letterCode + p) % 26;
+      return String.fromCharCode(
+        ((rotors[type][index].charCodeAt() - 65 - p + 26) % 26) + 65,
+      );
+    } else {
+      const index = rotors[type].indexOf(
+        String.fromCharCode(((letterCode + p) % 26) + 65),
+      );
+      return String.fromCharCode(((index - p + 26) % 26) + 65);
+    }
   };
 
   render() {
