@@ -88,6 +88,14 @@ class App extends Component {
   };
 
   rotorTransform = (type, position, ringSetting, fromRight, letter) => {
+    /*
+    These are right-to-left encodings. For example, transforming "A" through the
+    I-type rotor from the right yields "E".
+
+    For left-to-right transforms, the index of the input is looked up, then
+    converted to a letter. So to transform "A" through the I-type from the left,
+    we get its index 20, then convert that to the letter "U".
+    */
     const rotors = {
       I: 'EKMFLGDQVZNTOWYHXUSPAIBRCJ',
       II: 'AJDKSIRUXBLHWTMCQGZNPYFVOE',
@@ -98,21 +106,21 @@ class App extends Component {
       VII: 'NZJHGRCXMYSWBOUFAIVLPEKQDT',
       VIII: 'FKQHTLXOCBJSPDZRAMEWNIUYGV',
     };
+    const rotorCodes = [...rotors[type]].map((l) => l.charCodeAt() - 65);
 
     const letterCode = letter.charCodeAt() - 65;
     const adjustment = position - ringSetting;
+    /*
+    adjustment could be negative, so to prevent the adjusted value from falling
+    into the dark realm of negative ints prior to modulo-ing by 26, we add 26
+    first.
+    */
+    const adjustedCode = (letterCode + adjustment + 26) % 26;
 
-    if (fromRight) {
-      const index = (letterCode + adjustment + 26) % 26;
-      return String.fromCharCode(
-        ((rotors[type][index].charCodeAt() - 65 - adjustment + 26) % 26) + 65,
-      );
-    } else {
-      const index = rotors[type].indexOf(
-        String.fromCharCode(((letterCode + adjustment + 26) % 26) + 65),
-      );
-      return String.fromCharCode(((index - adjustment + 26) % 26) + 65);
-    }
+    const transformedCode = fromRight
+      ? rotorCodes[adjustedCode]
+      : rotorCodes.indexOf(adjustedCode);
+    return String.fromCharCode(((transformedCode - adjustment + 26) % 26) + 65);
   };
 
   render() {
