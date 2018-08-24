@@ -4,8 +4,9 @@ class Rotor extends Component {
   update = ({
     type = this.props.type,
     position = this.props.position,
+    ringSetting = this.props.ringSetting,
   } = {}) => {
-    this.props.onUpdate({ type, position });
+    this.props.onUpdate({ type, position, ringSetting });
   };
 
   handleTypeChange = (event) => {
@@ -26,6 +27,19 @@ class Rotor extends Component {
     this.update({ position });
   };
 
+  handleRingSettingChange = (event) => {
+    let ringSetting = +event.target.value;
+    if (Number.isNaN(ringSetting)) return;
+
+    if (ringSetting > 26) {
+      ringSetting = 1;
+    } else if (ringSetting < 1) {
+      ringSetting = 26;
+    }
+
+    this.update({ ringSetting });
+  };
+
   render() {
     return (
       <div className="Rotor">
@@ -39,11 +53,22 @@ class Rotor extends Component {
           <option value="VII">VII</option>
           <option value="VIII">VIII</option>
         </select>
-        <input
-          type="number"
-          value={this.props.position}
-          onChange={this.handlePositionChange}
-        />
+        <label>
+          Position
+          <input
+            type="number"
+            value={this.props.position}
+            onChange={this.handlePositionChange}
+          />
+        </label>
+        <label>
+          Ring Setting
+          <input
+            type="number"
+            value={this.props.ringSetting}
+            onChange={this.handleRingSettingChange}
+          />
+        </label>
       </div>
     );
   }

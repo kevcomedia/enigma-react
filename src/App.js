@@ -15,6 +15,7 @@ class App extends Component {
       {
         type: 'I',
         position: 1,
+        ringSetting: 1,
       },
     ],
   };
@@ -51,6 +52,7 @@ class App extends Component {
         this,
         this.state.rotors[0].type,
         this.state.rotors[0].position,
+        this.state.rotors[0].ringSetting,
         true,
       ),
       this.reflectorTransform,
@@ -58,6 +60,7 @@ class App extends Component {
         this,
         this.state.rotors[0].type,
         this.state.rotors[0].position,
+        this.state.rotors[0].ringSetting,
         false,
       ),
       this.plugboardTransform,
@@ -84,7 +87,7 @@ class App extends Component {
     return reflectors[this.state.reflector][letterCode];
   };
 
-  rotorTransform = (type, position, fromRight, letter) => {
+  rotorTransform = (type, position, ringSetting, fromRight, letter) => {
     const rotors = {
       I: 'EKMFLGDQVZNTOWYHXUSPAIBRCJ',
       II: 'AJDKSIRUXBLHWTMCQGZNPYFVOE',
@@ -97,18 +100,18 @@ class App extends Component {
     };
 
     const letterCode = letter.charCodeAt() - 65;
-    const p = position - 1;
+    const adjustment = position - ringSetting;
 
     if (fromRight) {
-      const index = (letterCode + p) % 26;
+      const index = (letterCode + adjustment + 26) % 26;
       return String.fromCharCode(
-        ((rotors[type][index].charCodeAt() - 65 - p + 26) % 26) + 65,
+        ((rotors[type][index].charCodeAt() - 65 - adjustment + 26) % 26) + 65,
       );
     } else {
       const index = rotors[type].indexOf(
-        String.fromCharCode(((letterCode + p) % 26) + 65),
+        String.fromCharCode(((letterCode + adjustment + 26) % 26) + 65),
       );
-      return String.fromCharCode(((index - p + 26) % 26) + 65);
+      return String.fromCharCode(((index - adjustment + 26) % 26) + 65);
     }
   };
 
@@ -116,10 +119,11 @@ class App extends Component {
     return (
       <div className="App">
         <Reflector type={this.state.reflector} onChange={this.setReflector} />
-        {this.state.rotors.map(({ type, position }, idx) => (
+        {this.state.rotors.map(({ type, position, ringSetting }, idx) => (
           <Rotor
             type={type}
             position={position}
+            ringSetting={ringSetting}
             onUpdate={this.updateRotor.bind(this, idx)}
             key={idx}
           />
