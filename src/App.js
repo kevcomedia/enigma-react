@@ -31,10 +31,6 @@ class App extends Component {
     ],
   };
 
-  setActiveKey = (key) => {
-    this.setState({ key });
-  };
-
   updatePlugboard = (plugboard) => {
     this.setState({ plugboard });
   };
@@ -51,6 +47,50 @@ class App extends Component {
         ...prevState.rotors.slice(index + 1),
       ],
     }));
+  };
+
+  stepAndUpdateKey = (newKey) => {
+    if (!newKey) {
+      return this.setState({ key: null });
+    }
+
+    const turnovers = {
+      I: [17],
+      II: [5],
+      III: [22],
+      IV: [10],
+      V: [26],
+      VI: [13, 26],
+      VII: [13, 26],
+      VIII: [13, 26],
+    };
+
+    // Helpers. Probably move them to utils.
+    const willTurnover = (rotor) =>
+      turnovers[rotor.type].includes(rotor.position);
+    const step = (position) => (position % 26) + 1;
+
+    this.setState(({ key, rotors }) => {
+      // No state needs updating when key has a value (ie, when it is pressed).
+      // Without this the rotors will keep stepping while a key is pressed.
+      if (key) return {};
+
+      // Stepping the rotors
+      const newRotorStates = [...rotors];
+      if (willTurnover(rotors[1])) {
+        newRotorStates[0].position = step(newRotorStates[0].position);
+        newRotorStates[1].position = step(newRotorStates[1].position);
+      }
+      if (willTurnover(rotors[2])) {
+        newRotorStates[1].position = step(newRotorStates[1].position);
+      }
+      newRotorStates[2].position = step(newRotorStates[2].position);
+
+      return {
+        key: newKey,
+        rotors: newRotorStates,
+      };
+    });
   };
 
   transform = (rotorStates, letter) => {
@@ -145,7 +185,7 @@ class App extends Component {
           />
         ))}
         <Lampboard output={this.transform(this.state.rotors, this.state.key)} />
-        <Keyboard onActivate={this.setActiveKey} />
+        <Keyboard onActivate={this.stepAndUpdateKey} />
         <Plugboard
           connections={this.state.plugboard}
           onConnectionChange={this.updatePlugboard}
