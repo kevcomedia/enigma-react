@@ -11,7 +11,18 @@ class App extends Component {
     key: null,
     plugboard: [],
     reflector: 'B',
+    // The rotor next to the reflector is first
     rotors: [
+      {
+        type: 'III',
+        position: 1,
+        ringSetting: 1,
+      },
+      {
+        type: 'II',
+        position: 1,
+        ringSetting: 1,
+      },
       {
         type: 'I',
         position: 1,
@@ -45,24 +56,23 @@ class App extends Component {
   transform = () => {
     if (!this.state.key) return null;
 
+    const rotorPipeRight = this.state.rotors
+      .map(({ type, position, ringSetting }) =>
+        this.rotorTransform.bind(this, type, position, ringSetting, true),
+      )
+      .reverse();
+
+    const rotorPipeLeft = this.state.rotors.map(
+      ({ type, position, ringSetting }) =>
+        this.rotorTransform.bind(this, type, position, ringSetting, false),
+    );
+
     const transformPipe = createPipe(
       this,
       this.plugboardTransform,
-      this.rotorTransform.bind(
-        this,
-        this.state.rotors[0].type,
-        this.state.rotors[0].position,
-        this.state.rotors[0].ringSetting,
-        true,
-      ),
+      ...rotorPipeRight,
       this.reflectorTransform,
-      this.rotorTransform.bind(
-        this,
-        this.state.rotors[0].type,
-        this.state.rotors[0].position,
-        this.state.rotors[0].ringSetting,
-        false,
-      ),
+      ...rotorPipeLeft,
       this.plugboardTransform,
     );
     return transformPipe(this.state.key);
