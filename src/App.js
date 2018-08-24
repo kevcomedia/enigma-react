@@ -57,14 +57,11 @@ class App extends Component {
     if (!this.state.key) return null;
 
     const rotorPipeRight = this.state.rotors
-      .map(({ type, position, ringSetting }) =>
-        this.rotorTransform.bind(this, type, position, ringSetting, true),
-      )
+      .map((rotorState) => this.rotorTransform.bind(this, rotorState, true))
       .reverse();
 
-    const rotorPipeLeft = this.state.rotors.map(
-      ({ type, position, ringSetting }) =>
-        this.rotorTransform.bind(this, type, position, ringSetting, false),
+    const rotorPipeLeft = this.state.rotors.map((rotorState) =>
+      this.rotorTransform.bind(this, rotorState, false),
     );
 
     const transformPipe = createPipe(
@@ -97,7 +94,8 @@ class App extends Component {
     return reflectors[this.state.reflector][letterCode];
   };
 
-  rotorTransform = (type, position, ringSetting, fromRight, letter) => {
+  rotorTransform = (rotorState, fromRight, letter) => {
+    const { type, position, ringSetting } = rotorState;
     /*
     These are right-to-left encodings. For example, transforming "A" through the
     I-type rotor from the right yields "E".
