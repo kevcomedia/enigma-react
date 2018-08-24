@@ -15,9 +15,11 @@ class Rotor extends Component {
   };
 
   handlePropChange = (prop) => (event) => {
-    let val = +event.target.value;
-    if (Number.isNaN(val)) return;
+    // If a non-number gets entered, the number input's value becomes an empty
+    // string.
+    if (!event.target.value) return this.update();
 
+    let val = +event.target.value;
     if (val > 26) {
       val = 1;
     } else if (val < 1) {
